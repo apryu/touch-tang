@@ -12,7 +12,7 @@ const translations = {
   zh: {
     title: '摸摸 糖 🐾',
     subtitle: '移动鼠标，看 糖 的眼神跟着你！',
-    hint: '双击 糖 摸摸她！💕',
+    hint: '双击 糖 摸摸他！💕',
     'music-label': '🎵 背景音乐',
     loading: '加载中...',
     'timer-label': '和 糖 一起专注吧！',
@@ -34,7 +34,7 @@ const translations = {
   en: {
     title: 'Touch Tang 🐾',
     subtitle: "Move your mouse and watch Tang's eyes follow you!",
-    hint: 'Double-click Tang to pet her! 💕',
+    hint: 'Double-click Tang to pet him! 💕',
     'music-label': '🎵 BGM',
     loading: 'Loading...',
     'timer-label': 'Focus with Tang!',
