@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Touch Tang 🐾</title>
+
+  <!-- Google Fonts: cute rounded fonts -->
+  <!-- ZCOOL KuaiLe — Q版中文 | Jua — 可爱韩文 | Baloo 2 — 圆润拉丁 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Jua&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+
+  <!-- 样式表 -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ========== 语言切换按钮 ========== -->
+  <nav class="lang-nav" aria-label="Language switcher">
+    <button class="lang-btn" data-lang="zh" title="中文">中文</button>
+    <button class="lang-btn" data-lang="en" title="English">English</button>
+    <button class="lang-btn" data-lang="ko" title="한국어">한국어</button>
+  </nav>
+
+  <!-- ========== 右侧食物面板 ========== -->
+  <aside class="food-panel" id="food-panel">
+    <!-- 标题 — 放在盘子 UI 上方 -->
+    <p class="food-label" data-i18n="food-label">🍽 喂 糖</p>
+
+    <img class="food-bg" src="tang_pic/eat-dish.png" alt="" aria-hidden="true">
+    <div class="food-content">
+
+      <div class="food-slots" id="food-slots">
+        <!-- 小鱼 -->
+        <div class="food-slot" data-food="fish">
+          <img class="food-item" src="tang_pic/eat-fish.png" alt="小鱼" draggable="false">
+        </div>
+        <!-- 食盆 -->
+        <div class="food-slot" data-food="bowl">
+          <img class="food-item" src="tang_pic/eat-food-bowl.png" alt="食盆" draggable="false">
+        </div>
+        <!-- agustd 特殊食物 — 拖到猫变 yoongia -->
+        <div class="food-slot" data-food="agustd">
+          <img class="food-item" src="tang_pic/eat-agustd.png" alt="AgustD" draggable="false">
+        </div>
+      </div>
+    </div>
+
+    <!-- 计数 & 提示 — 放在盘子 UI 下方 -->
+    <p class="feed-count" id="feed-count">0 / 5</p>
+    <p class="food-hint" data-i18n="food-hint">↕ 拖拽到 糖 嘴边试试吧</p>
+  </aside>
+
+  <!-- ========== 左侧计时器 ========== -->
+  <aside class="timer-panel" id="timer-panel">
+    <!-- timer.heic 作为面板底图边框 -->
+    <img class="timer-bg" src="tang_pic/timer-bg.png" alt="" aria-hidden="true">
+
+    <!-- 面板内容覆盖在底图上方 -->
+    <div class="timer-content">
+      <!-- 提示文字 -->
+      <p class="timer-label" data-i18n="timer-label">和 糖 一起专注吧！</p>
+
+      <!-- 奶瓶容器 -->
+      <div class="bottle" id="bottle">
+        <div class="bottle-neck"></div>
+        <div class="bottle-fill" id="bottle-fill"></div>
+        <div class="timer-display" id="timer-display">00:00:00</div>
+      </div>
+
+      <!-- 模式切换 -->
+      <div class="timer-mode-switch">
+        <button class="timer-mode-btn active" data-mode="countdown" id="mode-countdown" data-i18n="timer-countdown">⏳ 倒计时</button>
+        <button class="timer-mode-btn" data-mode="countup" id="mode-countup" data-i18n="timer-countup">⏱ 正计时</button>
+      </div>
+
+      <!-- 时间输入（倒计时模式用） -->
+      <div class="timer-input-wrap" id="timer-input-wrap">
+        <input type="number" class="timer-input" id="timer-input-hr" placeholder="0" min="0" max="99" value="0">
+        <span class="timer-input-unit" data-i18n="timer-hours">小时</span>
+        <input type="number" class="timer-input" id="timer-input-min" placeholder="25" min="0" max="59" value="25">
+        <span class="timer-input-unit" data-i18n="timer-minutes">分钟</span>
+      </div>
+
+      <!-- 控制按钮 -->
+      <div class="timer-controls">
+        <button class="timer-btn timer-btn-start" id="btn-timer-start" data-i18n="timer-start">▶ 开始</button>
+        <button class="timer-btn" id="btn-timer-pause" disabled data-i18n="timer-pause">⏸ 暂停</button>
+        <button class="timer-btn" id="btn-timer-reset" data-i18n="timer-reset">↺ 重置</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ========== 主内容区域 ========== -->
+  <main class="main-content">
+
+    <!-- 标题 -->
+    <h1 class="title" data-i18n="title">Touch Tang 🐾</h1>
+
+    <!-- 副标题 / 说明文字 -->
+    <p class="subtitle" data-i18n="subtitle">
+      Move your mouse and watch Tang's eyes follow you!
+    </p>
+
+    <!-- 猫咪图片互动区域 -->
+    <div class="cat-container" id="cat-container">
+      <img
+        id="cat-img"
+        class="cat-img"
+        src="tang_pic/x.png"
+        alt="A cute black cat named Tang"
+        width="650"
+        height="488"
+      >
+      <!-- 摸摸提示 -->
+      <p class="hint" data-i18n="hint">Double-click Tang to pet her! 💕</p>
+    </div>
+
+    <!-- Loading 提示（预加载时显示） -->
+    <p id="loading-msg" class="loading-msg" data-i18n="loading">Loading...</p>
+
+  </main>
+
+  <!-- ========== 底部音乐播放器 ========== -->
+  <footer class="music-footer">
+    <div class="music-player" id="music-player">
+      <!-- 歌曲信息（带横向滚动） -->
+      <div class="song-info-wrap">
+        <span class="music-icon">🎵</span>
+        <span class="song-info" id="song-info">--</span>
+      </div>
+
+      <!-- 播放控制按钮 -->
+      <div class="music-controls">
+        <!-- 上一首 -->
+        <button class="music-btn" id="btn-prev" title="上一首">⏮</button>
+        <!-- 播放 / 暂停 -->
+        <button class="music-btn music-btn-play" id="btn-play" title="播放">▶</button>
+        <!-- 下一首 -->
+        <button class="music-btn" id="btn-next" title="下一首">⏭</button>
+      </div>
+
+      <!-- 音量控制 -->
+      <div class="volume-control">
+        <span class="volume-icon">🔊</span>
+        <input type="range" id="volume-slider" class="volume-slider" min="0" max="100" value="70" title="音量">
+      </div>
+
+      <!-- 隐藏的 audio 元素 -->
+      <audio id="bgm-audio" preload="none"></audio>
+    </div>
+  </footer>
+
+  <!-- 猫叫声（隐藏，双击时触发） -->
+  <audio
+    id="meow-audio"
+    src="cat.m4a"
+    preload="auto"
+    hidden
+  ></audio>
+
+  <!-- 吃音效（隐藏，喂食时触发） -->
+  <audio
+    id="eat-audio"
+    src="eat/e.m4a"
+    preload="auto"
+    hidden
+  ></audio>
+
+  <!-- suga 特殊音效（隐藏，agustd 喂食时触发） -->
+  <audio
+    id="suga-audio"
+    src="eat/suga.m4a"
+    preload="auto"
+    hidden
+  ></audio>
+
+  <!-- ========== 装饰元素 ========== -->
+  <!-- 爪印装饰 -->
+  <span class="deco paw paw-1" aria-hidden="true">🐾</span>
+  <span class="deco paw paw-2" aria-hidden="true">🐾</span>
+  <span class="deco paw paw-3" aria-hidden="true">🐾</span>
+
+  <!-- 爱心装饰 -->
+  <span class="deco heart heart-1" aria-hidden="true">❤️</span>
+  <span class="deco heart heart-2" aria-hidden="true">❤️</span>
+  <span class="deco heart heart-3" aria-hidden="true">💕</span>
+
+  <!-- 星星装饰 -->
+  <span class="deco star star-1" aria-hidden="true">⭐</span>
+  <span class="deco star star-2" aria-hidden="true">✨</span>
+
+  <!-- ========== JavaScript ========== -->
+  <script src="script.js"></script>
+</body>
+</html>
