@@ -1,0 +1,1001 @@
+/* ============================================
+   Touch Tang 🐾 — 样式表
+   可爱、柔和、治愈系风格
+   ============================================ */
+
+/* ---------- 基础设置 ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  /* 温暖奶油色背景 */
+  background: linear-gradient(135deg, #fef9ef 0%, #fff5e6 50%, #fef9ef 100%);
+  /* ZCOOL KuaiLe: Q版中文 | Jua: 可爱韩文 | Baloo 2: 圆润拉丁 */
+  font-family: 'ZCOOL KuaiLe', 'Jua', 'Baloo 2', 'Nunito', 'PingFang SC', 'Microsoft YaHei', cursive, sans-serif;
+  color: #5d4037;  /* 温暖深棕色，不用纯黑 */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+  cursor: default;
+
+  /* 防止双击选中文字出现蓝屏 */
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* 禁止选中文字的蓝色高亮 */
+::selection {
+  background: transparent;
+}
+::-moz-selection {
+  background: transparent;
+}
+
+/* ---------- 语言导航按钮 ---------- */
+.lang-nav {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  display: flex;
+  gap: 8px;
+  z-index: 100;
+}
+
+.lang-btn {
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 8px 16px;
+  border: 2px solid #e8d5c4;
+  border-radius: 20px;  /* 胶囊形状 */
+  background: #fffdf5;
+  color: #8d6e63;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.lang-btn:hover {
+  background: #f8bbd0;   /* 淡粉色悬停 */
+  border-color: #f8bbd0;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(248, 187, 208, 0.3);
+}
+
+.lang-btn.active {
+  background: #ffab91;   /* 柔和珊瑚色 — 选中状态 */
+  border-color: #ffab91;
+  color: #fff;
+}
+
+/* ---------- 主内容区域 ---------- */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 40px 20px;
+}
+
+/* ---------- 标题 ---------- */
+.title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #5d4037;
+  text-align: center;
+  margin-bottom: 8px;
+  text-shadow: 2px 2px 0px rgba(255, 171, 145, 0.3);
+
+  /* 轻柔弹跳动画 */
+  animation: titleBounce 2s ease-in-out infinite;
+}
+
+@keyframes titleBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* ---------- 副标题 ---------- */
+.subtitle {
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: #8d6e63;
+  text-align: center;
+  margin-bottom: 32px;
+  max-width: 480px;
+  line-height: 1.5;
+}
+
+/* ---------- 猫咪图片容器 ---------- */
+.cat-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cat-img {
+  /* 与 Timer 等比缩放：cat 宽度 = 42vw，timer = 42vw * 270/650 ≈ 17.45vw */
+  width: clamp(320px, 42vw, 650px);
+  height: auto;
+  aspect-ratio: 650 / 488;
+  object-fit: contain;
+  border-radius: 20px;
+  /* 柔和阴影 */
+  box-shadow:
+    0 8px 32px rgba(139, 119, 101, 0.12),
+    0 2px 8px rgba(139, 119, 101, 0.08);
+  /* 轻微白色边框 */
+  border: 4px solid rgba(255, 255, 255, 0.8);
+  /* 过渡（图片切换时柔和） */
+  transition: opacity 0.1s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* 鼠标悬停在猫咪上时，给一点放大效果 */
+.cat-img:hover {
+  transform: scale(1.02);
+  transition: transform 0.3s ease;
+}
+
+/* ---------- 提示文字 ---------- */
+.hint {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #a1887f;
+  text-align: center;
+  margin-top: 16px;
+  opacity: 0.8;
+}
+
+/* ---------- Loading 提示 ---------- */
+.loading-msg {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #bcaaa4;
+  margin-top: 12px;
+  display: none;  /* 默认隐藏，JS 控制显示 */
+}
+
+.loading-msg.show {
+  display: block;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* ---------- 底部音乐播放器 ---------- */
+.music-footer {
+  width: 100%;
+  padding: 16px 20px 24px;
+  text-align: center;
+}
+
+.music-player {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  background: #fffdf5;
+  border: 2px solid #e8d5c4;
+  border-radius: 30px;
+  padding: 10px 20px;
+  box-shadow: 0 4px 16px rgba(139, 119, 101, 0.08);
+  max-width: 95vw;
+}
+
+/* 歌曲信息 — 带横向滚动 */
+.song-info-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;  /* 允许 flex 子元素收缩 */
+}
+
+.music-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.song-info {
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #6d4c41;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+/* 歌曲名太长时自动滚动 -- 文本左移露出末尾，停顿，再回位 */
+.song-info.scrolling {
+  animation: scrollText 8s ease-in-out infinite;
+}
+
+@keyframes scrollText {
+  0%, 15%  { transform: translateX(0); }
+  65%, 80% { transform: translateX(var(--scroll-dist)); }
+  95%, 100%{ transform: translateX(0); }
+}
+
+/* 暂停动画（鼠标悬停时） */
+.song-info.scrolling:hover {
+  animation-play-state: paused;
+}
+
+/* 控制按钮组 */
+.music-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.music-btn {
+  font-family: inherit;
+  font-size: 1.1rem;
+  width: 36px;
+  height: 36px;
+  border: 2px solid #e8d5c4;
+  border-radius: 50%;
+  background: #fffdf5;
+  color: #8d6e63;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.music-btn:hover {
+  background: #f8bbd0;
+  border-color: #f8bbd0;
+  color: #fff;
+  transform: scale(1.08);
+}
+
+/* 播放按钮稍大一圈 */
+.music-btn-play {
+  width: 42px;
+  height: 42px;
+  font-size: 1.2rem;
+  border-color: #ffab91;
+  color: #ffab91;
+}
+
+.music-btn-play:hover {
+  background: #ffab91;
+  color: #fff;
+}
+
+/* 音量控制 */
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.volume-icon {
+  font-size: 1rem;
+}
+
+.volume-slider {
+  width: 80px;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #e8d5c4;
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffab91;
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+
+.volume-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffab91;
+  cursor: pointer;
+  border: 2px solid #fff;
+}
+
+/* ---------- 装饰元素 ---------- */
+.deco {
+  position: fixed;
+  pointer-events: none;  /* 不阻挡鼠标事件 */
+  z-index: 0;
+  opacity: 0.35;         /* 半透明，不喧宾夺主 */
+  font-size: 1.8rem;
+}
+
+/* 爪印 — 缓慢漂浮 */
+.paw {
+  animation: pawFloat 6s ease-in-out infinite;
+}
+.paw-1 { top: 12%; left: 8%;  animation-delay: 0s;   font-size: 2rem; }
+.paw-2 { top: 75%; left: 85%; animation-delay: 2s;   font-size: 1.6rem; }
+.paw-3 { top: 50%; left: 5%;  animation-delay: 4s;   font-size: 1.4rem; }
+
+@keyframes pawFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25%      { transform: translateY(-12px) rotate(5deg); }
+  75%      { transform: translateY(8px) rotate(-5deg); }
+}
+
+/* 爱心 — 从下往上飘 */
+.heart {
+  animation: heartRise 8s ease-in-out infinite;
+  opacity: 0.3;
+}
+.heart-1 { bottom: 10%; left: 15%; animation-delay: 0s;   font-size: 1.8rem; }
+.heart-2 { bottom: 5%;  left: 75%; animation-delay: 3s;   font-size: 1.5rem; }
+.heart-3 { bottom: 15%; left: 60%; animation-delay: 5.5s; font-size: 2rem; }
+
+@keyframes heartRise {
+  0%   { transform: translateY(0) scale(1);   opacity: 0.3; }
+  50%  { transform: translateY(-40px) scale(1.15); opacity: 0.5; }
+  100% { transform: translateY(0) scale(1);   opacity: 0.3; }
+}
+
+/* 星星 — 闪烁 */
+.star {
+  animation: starTwinkle 4s ease-in-out infinite;
+}
+.star-1 { top: 20%; right: 10%; animation-delay: 0s;   font-size: 1.5rem; }
+.star-2 { top: 60%; left: 90%;  animation-delay: 2s;   font-size: 1.3rem; }
+
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.25; transform: scale(1); }
+  50%      { opacity: 0.5;  transform: scale(1.2); }
+}
+
+/* ---------- 右侧食物面板 ---------- */
+.food-panel {
+  position: fixed;
+  z-index: 50;
+  user-select: none;
+  -webkit-user-select: none;
+  overflow: visible;
+
+  /* 与 Timer 完全相同的尺寸 */
+  width: clamp(132px, 17.45vw, 270px);
+  aspect-ratio: 270 / 488;
+
+  /* 与 Timer 左右对称：Timer 用 left，Food 用 right */
+  right: calc((100vw - clamp(320px, 42vw, 650px)) / 4);
+  left: auto;
+  top: 50%;
+  transform: translate(50%, -50%);
+}
+
+.food-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 24px;
+}
+
+.food-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(3px, 0.5vw, 7px);
+  height: 100%;
+  padding: clamp(8px, 1.4vw, 22px) clamp(8px, 1.3vw, 20px);
+}
+
+.food-label {
+  position: absolute;
+  top: -34px;
+  left: 0;
+  right: 0;
+  font-family: inherit;
+  font-size: clamp(0.85rem, 1.15vw, 1.1rem);
+  font-weight: 800;
+  color: #5d4037;
+  text-align: center;
+  line-height: 1.3;
+  text-shadow: 0 1px 2px rgba(255,255,255,0.5);
+}
+
+/* 食物槽 — 纵向均匀分布 */
+.food-slots {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 100%;
+  gap: clamp(1px, 0.15vw, 3px);
+}
+
+.food-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44%;
+  aspect-ratio: 1 / 1;
+  border-radius: 10px;
+  border: 1.5px dashed rgba(200, 180, 160, 0.25);
+  background: rgba(255, 255, 255, 0.15);
+  position: relative;
+  cursor: grab;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.food-slot:hover {
+  transform: scale(1.1);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+}
+
+.food-slot:active {
+  cursor: grabbing;
+}
+
+.food-slot.is-full {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* 食物图片 — 保持大小，不随槽缩小 */
+.food-item {
+  width: 75%;
+  height: 75%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* 喂食计数 — 盘子下方 */
+.feed-count {
+  position: absolute;
+  bottom: -28px;
+  left: 0;
+  right: 0;
+  font-family: inherit;
+  font-size: clamp(0.75rem, 1vw, 0.95rem);
+  font-weight: 700;
+  color: #5d4037;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* 拖拽提示 — 盘子下方 */
+.food-hint {
+  position: absolute;
+  bottom: -50px;
+  left: 0;
+  right: 0;
+  font-family: inherit;
+  font-size: clamp(0.7rem, 0.95vw, 0.9rem);
+  font-weight: 600;
+  color: #5d4037;
+  text-align: center;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+/* 拖拽克隆体 */
+.food-drag-clone {
+  position: fixed;
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0.9;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+  transition: none;
+}
+
+/* 吃饱提示 */
+.food-full-msg {
+  position: fixed;
+  z-index: 200;
+  font-family: inherit;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ff7043;
+  background: rgba(255,255,255,0.9);
+  padding: 8px 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  pointer-events: none;
+  animation: fullMsgFloat 2.5s ease-out forwards;
+}
+
+@keyframes fullMsgFloat {
+  0%   { opacity: 1; transform: translate(-50%, 0) scale(0.8); }
+  30%  { opacity: 1; transform: translate(-50%, -20px) scale(1.05); }
+  100% { opacity: 0; transform: translate(-50%, -60px) scale(0.9); }
+}
+
+/* ---------- 左侧计时器 ---------- */
+.timer-panel {
+  position: fixed;
+  z-index: 50;
+  user-select: none;
+  -webkit-user-select: none;
+
+  /* 宽度与猫等比，猫用 42vw，timer = 42vw × 270/650 ≈ 17.45vw */
+  width: clamp(132px, 17.45vw, 270px);
+  aspect-ratio: 270 / 488;
+
+  /*
+    定位: 放在「左页面边缘」和「猫咪左边缘」的正中间。
+
+    猫居中 → 猫左边缘 = (100vw - 猫宽) / 2
+    左侧空白区中心 = 猫左边缘 / 2 = (100vw - 猫宽) / 4
+
+    left 把定时器的中心定位在该点；translate(-50%,-50%) 回拉实现水平和垂直居中。
+
+    验证 (1440px宽): 猫=650px → left=(1440-650)/4=197.5px
+    定时器宽=270px → 左边缘=62.5px, 右边缘=332.5px
+    猫左边缘=395px → 左空隙=62.5px, 到猫的空隙=395-332.5=62.5px ✓
+  */
+  left: calc((100vw - clamp(320px, 42vw, 650px)) / 4);
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* timer.heic 转换的底图 — 作为面板背景/边框，填满面板 */
+.timer-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 24px;
+}
+
+/* 内容覆盖在底图上方，内部按钮和文字保持固定大小 */
+.timer-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(4px, 0.7vw, 10px);
+  height: 100%;
+  padding: clamp(10px, 1.6vw, 24px) clamp(8px, 1.3vw, 20px);
+}
+
+.timer-label {
+  font-family: inherit;
+  font-size: clamp(0.7rem, 1vw, 0.95rem);
+  font-weight: 700;
+  color: #5d4037;
+  text-align: center;
+  line-height: 1.3;
+  text-shadow: 0 1px 2px rgba(255,255,255,0.5);
+}
+
+/* ===== 奶瓶（尺寸随面板等比变化） ===== */
+.bottle {
+  position: relative;
+  width: 37%;                /* 相对于 timer-panel 宽度 */
+  aspect-ratio: 100 / 150;
+  max-width: 100px;
+  max-height: 150px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 3px solid #d7ccc8;
+  border-radius: 22px 22px 32px 32px / 18px 18px 32px 32px;
+  overflow: hidden;
+}
+
+/* 瓶颈装饰 */
+.bottle-neck {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 42%;
+  height: 11%;
+  background: rgba(255, 255, 255, 0.7);
+  border: 2px solid #d7ccc8;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  z-index: 2;
+}
+
+/* 液体填充 */
+.bottle-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 0%;  /* JS 动态修改 */
+  background: linear-gradient(
+    180deg,
+    rgba(255, 171, 145, 0.55) 0%,
+    rgba(248, 187, 208, 0.5) 40%,
+    rgba(255, 171, 145, 0.6) 100%
+  );
+  transition: height 0.5s ease;
+  z-index: 0;
+  border-radius: 0 0 29px 29px / 0 0 29px 29px;
+}
+
+/* 时间显示 */
+.timer-display {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-family: 'Baloo 2', 'ZCOOL KuaiLe', 'Jua', cursive, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #5d4037;
+  text-shadow: 0 1px 2px rgba(255,255,255,0.7);
+  letter-spacing: 1px;
+}
+
+/* ===== 模式切换 ===== */
+.timer-mode-switch {
+  display: flex;
+  gap: 5px;
+}
+
+.timer-mode-btn {
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border: 1.5px solid #e8d5c4;
+  border-radius: 14px;
+  background: rgba(255, 253, 245, 0.85);
+  color: #a1887f;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.timer-mode-btn.active {
+  background: #ffab91;
+  border-color: #ffab91;
+  color: #fff;
+}
+
+/* ===== 时间输入 ===== */
+.timer-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.8rem;
+  color: #8d6e63;
+}
+
+.timer-input {
+  font-family: inherit;
+  font-size: 0.85rem;
+  width: 46px;
+  padding: 4px 6px;
+  border: 1.5px solid #e8d5c4;
+  border-radius: 10px;
+  background: rgba(255, 253, 245, 0.85);
+  color: #5d4037;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.timer-input:focus {
+  border-color: #ffab91;
+}
+
+.timer-input-unit {
+  font-size: 0.72rem;
+  color: #a1887f;
+  white-space: nowrap;
+}
+
+/* 正计时模式下弱化输入 */
+.timer-panel.countup-mode .timer-input-wrap {
+  opacity: 0.4;
+}
+.timer-panel.countup-mode .timer-input {
+  pointer-events: none;
+}
+
+/* ===== 控制按钮 ===== */
+.timer-controls {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.timer-btn {
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border: 1.5px solid #e8d5c4;
+  border-radius: 14px;
+  background: rgba(255, 253, 245, 0.85);
+  color: #8d6e63;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.timer-btn:hover:not(:disabled) {
+  background: #f8bbd0;
+  border-color: #f8bbd0;
+  color: #fff;
+}
+
+.timer-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.timer-btn-start {
+  border-color: #ffab91;
+  color: #ffab91;
+}
+.timer-btn-start:hover:not(:disabled) {
+  background: #ffab91;
+  color: #fff;
+}
+
+/* ===== 计时运行中瓶子发光 ===== */
+.timer-panel.running .bottle {
+  border-color: #ffab91;
+  box-shadow: 0 0 18px rgba(255, 171, 145, 0.3);
+}
+
+/* 计时结束液面闪烁 */
+@keyframes fillFlash {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.3; }
+}
+
+/* ===== 喂食 — 脸红效果 ===== */
+.cat-blush {
+  position: fixed;
+  z-index: 60;
+  pointer-events: none;
+  animation: blushFade 2s ease-out forwards;
+}
+
+@keyframes blushFade {
+  0%   { opacity: 0; transform: scale(0.5); }
+  20%  { opacity: 0.7; transform: scale(1); }
+  80%  { opacity: 0.5; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.8); }
+}
+
+/* ===== 爱心粒子 ===== */
+.heart-particle {
+  position: fixed;
+  z-index: 61;
+  pointer-events: none;
+  font-size: 1.4rem;
+  animation: heartBurst 1.2s ease-out forwards;
+}
+
+@keyframes heartBurst {
+  0%   { opacity: 1; transform: translate(0, 0) scale(0.3); }
+  40%  { opacity: 0.9; transform: translate(var(--hx), var(--hy)) scale(1.2); }
+  100% { opacity: 0; transform: translate(var(--hx), calc(var(--hy) - 40px)) scale(0.5); }
+}
+
+/* ---------- 响应式：手机端 ---------- */
+@media (max-width: 768px) {
+  /* 隐藏部分装饰 */
+  .paw-1, .star-2 { display: none; }
+  .deco { font-size: 1.2rem; }
+
+  /* 语言按钮 */
+  .lang-nav {
+    top: 12px;
+    right: 12px;
+    gap: 4px;
+  }
+
+  .lang-btn {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+
+  /* ===== 手机端：食物面板缩小到左上角 ===== */
+  .food-panel {
+    position: fixed;
+    left: 6px;
+    right: auto;
+    top: 50px;
+    transform: none;
+    width: clamp(130px, 38vw, 180px);
+    aspect-ratio: auto;
+    height: auto;
+    background: #fffdf5;
+    border: 2px solid #e8d5c4;
+    border-radius: 18px;
+    z-index: 50;
+  }
+
+  .food-bg { display: none; }
+
+  .food-content {
+    padding: 8px 10px;
+    gap: 4px;
+  }
+
+  .food-label {
+    position: absolute;
+    top: -24px;
+    left: 0;
+    right: 0;
+    font-size: 0.72rem;
+  }
+
+  .food-slots {
+    flex-direction: row;
+    gap: 4px;
+    flex: none;
+  }
+
+  .food-slot {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    border-width: 1px;
+  }
+
+  .food-item {
+    width: 70%;
+    height: 70%;
+  }
+
+  .feed-count {
+    position: absolute;
+    bottom: -22px;
+    font-size: 0.62rem;
+  }
+
+  .food-hint {
+    position: absolute;
+    bottom: -40px;
+    font-size: 0.56rem;
+  }
+
+  /* ===== 手机端：Timer 缩小到右上角 ===== */
+  .timer-panel {
+    position: fixed;
+    left: auto;
+    right: 6px;
+    top: 50px;
+    transform: none;
+    width: clamp(130px, 38vw, 180px);
+    aspect-ratio: auto;
+    height: auto;
+    background: #fffdf5;
+    border: 2px solid #e8d5c4;
+    border-radius: 18px;
+    z-index: 50;
+  }
+
+  .timer-bg {
+    display: none;
+  }
+
+  .timer-content {
+    padding: 8px 10px;
+    gap: 5px;
+  }
+
+  .timer-label {
+    font-size: 0.65rem;
+  }
+
+  .bottle {
+    width: 48px;
+    height: 72px;
+    max-width: none;
+    max-height: none;
+  }
+
+  .bottle-neck {
+    width: 20px;
+    height: 8px;
+  }
+
+  .timer-display {
+    font-size: 0.72rem;
+  }
+
+  .timer-mode-btn {
+    font-size: 0.6rem;
+    padding: 3px 7px;
+  }
+
+  .timer-input {
+    font-size: 0.62rem;
+    width: 32px;
+    padding: 2px 4px;
+  }
+
+  .timer-input-unit {
+    font-size: 0.58rem;
+  }
+
+  .timer-btn {
+    font-size: 0.6rem;
+    padding: 3px 7px;
+  }
+
+  /* ===== 标题 ===== */
+  .title {
+    font-size: 2rem;
+    margin-top: 8px;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    margin-bottom: 16px;
+    padding: 0 16px;
+  }
+
+  /* 猫咪图片 */
+  .cat-img {
+    width: clamp(280px, 75vw, 400px);
+    height: auto;
+    aspect-ratio: 650/488;
+  }
+
+  .hint {
+    font-size: 0.85rem;
+  }
+
+  /* 音乐播放器 */
+  .music-player {
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 18px;
+  }
+
+  .song-info {
+    max-width: 220px;
+  }
+
+  .volume-slider {
+    width: 100px;
+  }
+}
